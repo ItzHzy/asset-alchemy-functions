@@ -1,0 +1,13 @@
+steps:
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - asset-alchemy-alerter-prod
+      - --region=us-central1
+      - --service-account=738458318950-compute@developer.gserviceaccount.com
+      - --trigger-http
+      - --runtime=nodejs14
+      - --allow-unauthenticated
+      - --entry-point=sendAlert

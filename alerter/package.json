@@ -1,0 +1,37 @@
+{
+	"name": "asset-alchemy-alerter",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./index.js",
+	"scripts": {
+		"test": "node ./src/index.test.js",
+		"start": "npx @google-cloud/functions-framework --target=sendAlert",
+		"watch": "npm-watch start",
+		"deploy:staging": "gcloud builds submit --config cloudbuild.staging.yaml",
+		"deploy:prod": "gcloud builds submit --config cloudbuild.prod.yaml"
+	},
+	"watch": {
+		"start": "*.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/aespr/asset-alchemy-alerter.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/aespr/asset-alchemy-alerter/issues"
+	},
+	"homepage": "https://github.com/aespr/asset-alchemy-alerter#readme",
+	"dependencies": {
+		"@google-cloud/firestore": "^5.0.2",
+		"@google-cloud/functions-framework": "^3.0.0",
+		"@sendgrid/mail": "^7.6.1",
+		"@sentry/node": "^6.17.9",
+		"dayjs": "^1.10.7",
+		"dotenv": "^16.0.0"
+	},
+	"devDependencies": {
+		"npm-watch": "^0.11.0"
+	}
+}
