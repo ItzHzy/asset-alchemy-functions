@@ -55,8 +55,6 @@ const sendAlertEmail = (sendTo, symbol, ruleName) => {
 };
 
 Functions.http("sendAlert", (req, res) => {
-	res.status(200).send("Hello World");
-
 	Sentry.withScope((scope) => {
 		try {
 			const trigger = req.body;
