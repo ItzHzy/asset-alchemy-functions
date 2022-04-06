@@ -55,11 +55,13 @@ const sendAlertEmail = (sendTo, symbol, ruleName) => {
 };
 
 Functions.http("sendAlert", (req, res) => {
+	res.status(200).send("Hello World");
+
 	Sentry.withScope((scope) => {
 		try {
-			const { data } = req.body;
+			const trigger = req.body;
 
-			const alertRef = firestore.collection("alerts").doc(data.id);
+			const alertRef = firestore.collection("alerts").doc(trigger.data.id);
 
 			alertRef.get().then((alertSnapshot) => {
 				const alert = alertSnapshot.data();
@@ -69,11 +71,9 @@ Functions.http("sendAlert", (req, res) => {
 				userRef.get().then((userSnapshot) => {
 					const user = userSnapshot.data();
 
-					if (alert.email) {
-						sendAlertEmail(user.email, data.event, data.name);
+					if (user.email) {
+						sendAlertEmail(user.email, trigger.data.event, trigger.data.name);
 					}
-
-					res.send("Hello World");
 				});
 			});
 		} catch (err) {
