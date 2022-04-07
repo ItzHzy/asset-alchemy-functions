@@ -57,9 +57,11 @@ const sendAlertEmail = (sendTo, symbol, ruleName) => {
 Functions.http("sendAlert", (req, res) => {
 	Sentry.withScope((scope) => {
 		try {
-			const trigger = req.body;
+			const { data } = req.body;
 
-			const alertRef = firestore.collection("alerts").doc(trigger.data.id);
+			const trigger = JSON.parse(data);
+
+			const alertRef = firestore.collection("alerts").doc(trigger.id);
 
 			alertRef.get().then((alertSnapshot) => {
 				const alert = alertSnapshot.data();
@@ -70,7 +72,7 @@ Functions.http("sendAlert", (req, res) => {
 					const user = userSnapshot.data();
 
 					if (user.email) {
-						sendAlertEmail(user.email, trigger.data.event, trigger.data.name);
+						sendAlertEmail(user.email, trigger.event, trigger.name);
 					}
 				});
 			});
